@@ -1,9 +1,14 @@
 import socket
 import re
 import ast
+import datetime
+from database_helper import db
 
+IP = "127.0.0.1"
+PORT = 2021
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.bind(("0.0.0.0", 2023))
+s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # Allows to use the same IP/Port on server restart
+s.bind((IP, PORT))
 s.listen(5)
 
 
@@ -22,22 +27,10 @@ def _change_data_to_dict(data):
             return data_dictionary
 
 
-def enter_data_in_db(data):
-    """
-    Accepts a string and converts it into a dictionary using the private function '_change_data_to_dict()' and later
-    enters the data into the database.
-    :param data: String object received from the client
-    :return: Dictionary object
-    """
-    data_dictionary = _change_data_to_dict(data)
-    if data_dictionary:
-        return data_dictionary
-
-
 while True:
     clientsocket, address = s.accept()
     print("Connection from has been established!")
     data = clientsocket.recv(1024).decode("utf-8")
-    data = enter_data_in_db(data)
-    print(type(data))
-    print(data)
+    data = _change_data_to_dict(data)
+    if data:
+        db.enter_data_in_db(data)
