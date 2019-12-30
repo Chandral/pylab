@@ -9,7 +9,6 @@ s.listen(5)
 while True:
     clt, adr = s.accept()
     print(f"Connection to {adr} established")
-
     m = {1: "Client", 2: "Server"}
     my_msg = pickle.dumps(m)
     my_msg = bytes(f"{len(my_msg):<{a}}", "utf-8") + my_msg  # Totally lost here, didn't pickle turn it to byte code already? Why is it sending in "UTF-8"
