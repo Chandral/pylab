@@ -12,7 +12,7 @@ mysql_db = mysql.connector.connect(
 def connection():
     """
     Simply returns a cursor object of the database connection
-    :return: MYSQL DB cursor
+    :return: MYSQL DB cursor object
     """
     return mysql_db.cursor()
 
@@ -41,6 +41,6 @@ def enter_data_in_db(data):
     try:
         connection().execute("INSERT INTO clientData ({}) VALUES ({})".format(fields, values))  # SQL query to insert
         mysql_db.commit()  # Committing changes to the DB
-        return True, fields + ' | ' + values
+        return True, "Data Saved"
     except Exception as E:
-        return False, fields + ' | ' + values, str(E)
+        return False, str(E)
