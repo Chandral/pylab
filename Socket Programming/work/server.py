@@ -37,6 +37,7 @@ def _change_data_to_dict(data):
 
 
 log_entry("Listening for incoming connection at {}:{}".format(IP, PORT))
+
 while True:
     clientsocket, address = s.accept()
     log_entry("Connection from {} has been established!".format(address))
