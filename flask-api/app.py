@@ -1,4 +1,4 @@
-import json
+import json, yaml
 import mysql.connector
 from flask import Flask, jsonify, make_response
 
@@ -17,24 +17,34 @@ def connection():
 
 
 app = Flask(__name__)
+columns_query = "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='socketTestDB' AND `TABLE_NAME`='V_TEE_sites';"
 
 
 @app.route("/")
 def hello():
 	try:
 		c, conn = connection()
-		c.execute("SELECT * FROM V_TEE_sites")
-		data = c.fetchall()
-		print("c----->>", data)
-		# print(jsonify(data))
+		c.execute(columns_query)
+		column_names = [(column_record[0]) for column_record in c.fetchall()]
+		if server_config["last_record_id"]:
+			c.execute("SELECT * FROM Products WHERE AccID > {};".format(server_config["last_record_id"]))
+		else:
+			c.execute("SELECT * FROM V_TEE_sites")
+		raw_data = c.fetchall()
+		list_of_record_dict = [dict(zip(column_names, record)) for record in raw_data]
+		last_id = list_of_record_dict[-1]["AccID"]
+		a = """{"last_record_id": {}}""".format(str(last_id))
+		last = json.loads(a)
+		print("~"*20, last["last_record_id"])
+
 		response_body = {
 			"message": "JSON received!",
-			"sender": "name"
+			"sender": "name",
+			"data": list_of_record_dict
 		}
 
 		res = make_response(jsonify(response_body), 200)
-
-		return jsonify(data)
+		return res
 	except Exception as e:
 		return str(e)
 
