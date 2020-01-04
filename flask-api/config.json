@@ -1,0 +1,7 @@
+{
+  "host": "127.0.0.1",
+  "user": "test",
+  "password": "Orion@123",
+  "database": "socketTestDB",
+  "last_record_id": false
+}

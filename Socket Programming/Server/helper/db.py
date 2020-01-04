@@ -19,8 +19,8 @@ def connection():
 
 def enter_data_in_db(data):
     """
-        Takes in a dictionary as a parameter, extracts dictionary keys as DB column names and the values as column's data.
-        Saves the data in the database and returns
+        Takes in a dictionary as a parameter, extracts dictionary keys as DB column names and the values as column's
+        data. Saves the data in the database and returns
         :param data: Dictionary object which is the data received from the client
         :return: A tuple with the two values 'True' and the data received if data saved successfully or a tuple with
         one more additional value, string of Exception occurred if data submission failed.

@@ -1,48 +1,31 @@
-import re
-import ast
 import socket
-from helper.logger import enter_log
-from helper.db import enter_data_in_db
+import helper.logger as logger
+import helper.db as db
+import helper.s_helper as help
 
 IP = "127.0.0.1"
 PORT = 2021
 
+logger.create_logs_directory()
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # Allows to use the same IP/Port on server restart
 s.bind((IP, PORT))
 s.listen(5)
-
-
-def _change_data_to_dict(data):
-    """
-    Private function which accepts a string then extracts a substring surround by curly braces and converts it to
-    dictionary. This function is not used directly, it's used within another function 'enter_data_in_db()'
-    :param data: String object received from the client
-    :return: Dictionary object
-    """
-    search_substring = re.search("{([^}]+)}", data)  # Extracts string which starts and ends with curly braces
-    if search_substring:
-        data_as_string = search_substring.group(0)
-        data_dictionary = ast.literal_eval(data_as_string)
-        if isinstance(data_dictionary, dict):
-            return data_dictionary
-
-
-enter_log("INFO", "Listening for incoming connections at {}:{}".format(IP, PORT))
+logger.log(logger.INFO, "Listening for incoming connections at {}:{}".format(IP, PORT))
 
 while True:
-    clientsocket, address = s.accept()
-    enter_log("SUCCESS", "Established incoming connection from {}".format(address))
-    data = clientsocket.recv(1024).decode("utf-8")
-    enter_log("SUCCESS", "Decoded data received from {}".format(address))
-    enter_log("INFO", data)
-    data = _change_data_to_dict(data)
+    client_socket, address = s.accept()
+    logger.log(logger.SUCCESS, "Established incoming connection from {}".format(address))
+    data = client_socket.recv(1024).decode("utf-8")
+    logger.log(logger.SUCCESS, "Decoded data received from {}".format(address))
+    logger.log(logger.INFO, data)
+    data = help.change_data_to_dict(data)
     if data:
-        db_entry = enter_data_in_db(data)
+        db_entry = db.enter_data_in_db(data)
         if db_entry[0]:
-            enter_log("SUCCESS", "Saved data received from {}".format(address))
+            logger.log(logger.SUCCESS, "Saved data received from {}".format(address))
         elif not db_entry[0]:
-            enter_log("ERROR", "Failed to save data received from {}".format(address))
-            enter_log("ERROR", db_entry[1])
+            logger.log(logger.ERROR, "Failed to save data received from {}".format(address))
+            logger.log(logger.ERROR, db_entry[1])
     else:
-        enter_log("WARNING", "Client request does not contain appropriate data")
+        logger.log(logger.WARNING, "Client request does not contain appropriate data")
