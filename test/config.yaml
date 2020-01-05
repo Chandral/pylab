@@ -1,25 +1,6 @@
-# fruits.yaml file
-
-apples: 20
-mangoes: 2
-bananas: 3
-grapes: 100
-pineapples: 1
-
-- sports:
-  - soccer
-  - football
-  - basketball
-  - cricket
-  - hockey
-  - table tennis
-- countries:
-  - Pakistan
-  - USA
-  - India
-  - China
-  - Germany
-  - France
-  - Spain
-- apples: 22220
-apples: 22220
+database: socketTestDB
+host: 127.0.0.1
+last_record_id: false
+password: Orion@123,
+sdfs: 11
+user: test
