@@ -1,6 +1,5 @@
-database: socketTestDB
 host: 127.0.0.1
-last_record_id: false
-password: Orion@123,
-sdfs: 11
 user: test
+password: Orion@123
+database: socketTestDB
+last_record_id: false
