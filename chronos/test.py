@@ -1,13 +1,16 @@
-from datetime import datetime, timedelta
-from pytz import timezone
+import pytz, time
+from datetime import datetime as dt
 
-TIMESTAMP_PREFIX_FORMAT = "%Y-%m-%d, %H:%M:%S"
+date_string = "15-01-2020"  # String in DD-MM-YYYY format which will be converted to datetime object
+date_object = dt.strptime(date_string, "%d-%m-%Y")  # Datetime object
+UTC = pytz.timezone("UTC")  # Declaring UTC timezone
+date_object = UTC.localize(date_object)  # Setting timezone of 'date_object' to UTC
+print(date_object.strftime("%s"))
+expected_unix_timestamp = 1579046400  # Verified this on https://www.unixtimestamp.com/index.php
 
-ts = int("1571897721")
-utc = datetime.utcfromtimestamp(ts)
-print(utc)
-print(utc + timedelta(hours=6, minutes=30))
-print(utc.astimezone(timezone("Asia/Rangoon")))
+print("Expected UNIX timestamp based on https://www.unixtimestamp.com/index.php")
+print(">>> " + str(expected_unix_timestamp))  # Prints 1579046400
+print("Unix timestamp returned")
+print(">>> " + str(time.mktime(date_object.timetuple())))  # Prints 1579026600.0
 
-def unix_to_rangoon_tz(unix_stamp):
-    str_to_int = int
+print("~"*200)
