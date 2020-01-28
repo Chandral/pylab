@@ -1,6 +1,5 @@
 from pysnmp import hlapi
 
-
 def cast(value):
     try:
         return int(value)
@@ -49,3 +48,5 @@ def get(target, oids, credentials, port=161, engine=hlapi.SnmpEngine(), context=
     )
     return fetch(handler, 1)[0]
 
+
+print(get('10.0.0.1', ['1.3.6.1.2.1.1.5.0'], hlapi.CommunityData('ICTSHORE')))
