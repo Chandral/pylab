@@ -1,11 +1,11 @@
 class Link:
     def __init__(self):
-        self.__next = True
-
-    def setter(self):
-        self.__next = False
+        self.j = "asdf"
 
 
-class LinkedList(Link):
-    def setter(self):
-        pass
+    @property
+    def J_IS(self):
+        return self.j
+
+a = Link()
+print(a.J_IS)
