@@ -1,33 +1,10 @@
-from pysnmp.entity import engine, config
-from pysnmp.carrier.asyncore.dgram import udp
-from pysnmp.entity.rfc3413 import ntfrcv
+from pysnmp.smi import builder, view, rfc1902
 
-snmpEngine = engine.SnmpEngine()
-TrapAgentAddress = '0.0.0.0'  # Trap listener address
-Port = 8000  # trap listener port
-print("Agent is listening SNMP Trap on " + TrapAgentAddress+" , Port : " + str(Port))
-print('~'*50)
-config.addTransport(
-    snmpEngine,
-    udp.domainName + (1,),
-    udp.UdpTransport().openServerMode((TrapAgentAddress, Port))
-)
-
-#  Configure community here
-config.addV1System(snmpEngine, 'my-area', 'public')
-
-
-def cbFun(snmpEngine, stateReference, contextEngineId, contextName, varBinds, cbCtx):
-    print("Received new Trap message")
-    for name, val in varBinds:
-        print('%s = %s' % (name.prettyPrint(), val.prettyPrint()))
-
-
-ntfrcv.NotificationReceiver(snmpEngine, cbFun)
-snmpEngine.transportDispatcher.jobStarted(1)
-
-try:
-    snmpEngine.transportDispatcher.runDispatcher()
-except:
-    snmpEngine.transportDispatcher.closeDispatcher()
-    raise
+mibBuilder = builder.MibBuilder()
+mibView = view.MibViewController(mibBuilder)
+mibVar = rfc1902.ObjectIdentity('SNMPv2-MIB', 'sysDescr')
+mibVar.resolveWithMib(mibView)
+OID = tuple(mibVar)
+print(OID)  # Prints >> (1, 3, 6, 1, 2, 1, 1, 1)
+mibVar = rfc1902.ObjectIdentity(OID).resolveWithMib(mibView)
+print(mibVar.prettyPrint())  # Prints >> SNMPv2-MIB::sysDescr

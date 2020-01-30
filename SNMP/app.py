@@ -50,11 +50,14 @@ def get(target, oids, credentials, port=161, engine=hlapi.SnmpEngine(), context=
     return fetch(handler, 1)[0]
 
 
-print(get('10.0.0.1', ['1.3.6.1.2.1.1.5.0'], hlapi.CommunityData('ICTSHORE')))
+a = get('demo.snmplabs.com', ['1.3.6.1.2.1.1.2.0'], hlapi.CommunityData('public'))
+
+g = construct_object_types(a[i] for i in a)
+print(g[0].prettyPrint())
 
 
-def get_bulk(target, oids, credentials, count, start_from=0, port=161,
-             engine=hlapi.SnmpEngine(), context=hlapi.ContextData()):
+def get_bulk(target, oids, credentials, count, start_from=0, port=161, engine=hlapi.SnmpEngine(),
+             context=hlapi.ContextData()):
     handler = hlapi.bulkCmd(
         engine,
         credentials,

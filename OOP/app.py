@@ -1,11 +1,9 @@
-class Link:
+class Test:
     def __init__(self):
-        self.j = "asdf"
+        self.aqq = True
 
+    def jk(self):
+        return self.a
 
-    @property
-    def J_IS(self):
-        return self.j
-
-a = Link()
-print(a.J_IS)
+q = Test()
+print(hasattr(q, 'aqq'))
