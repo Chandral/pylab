@@ -1,6 +1,5 @@
 from pysnmp import hlapi
 
-
 def cast(value):
     try:
         return int(value)
@@ -50,6 +49,7 @@ def get(target, oids, credentials, port=161, engine=hlapi.SnmpEngine(), context=
     return fetch(handler, 1)[0]
 
 
+<<<<<<< HEAD:SNMP/Old Files/app.py
 a = get('demo.snmplabs.com', ['1.3.6.1.2.1.1.2.0'], hlapi.CommunityData('public'))
 
 g = construct_object_types(a[i] for i in a)
@@ -67,3 +67,6 @@ def get_bulk(target, oids, credentials, count, start_from=0, port=161, engine=hl
         *construct_object_types(oids)
     )
     return fetch(handler, count)
+=======
+print(get('10.0.0.1', ['1.3.6.1.2.1.1.5.0'], hlapi.CommunityData('ICTSHORE')))
+>>>>>>> b8a3076860c8cf1a7d4b2b236269687764731d4c:SNMP/app.py

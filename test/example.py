@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 def get_my_data(dictionary, threshold):
     """
     Function takes two parameters: A dictionary and a threshold value as an integer.
@@ -18,3 +19,25 @@ your_dictionary = {('a', 'b'): 2, ('b', 'c'): 4, ('c', 'd'): 6, ('d', 'e'): 8, (
                    ('g', 'h'): 2, ('h', 'i'): 7, ('i', 'j'): 10}
 result = get_my_data(your_dictionary, 50)
 print(result)
+=======
+import inspect
+
+class Checker:
+    def __init__(self):
+        self._age = 10
+
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, val):
+        print(inspect.stack()[1].function)
+        self._age = val
+
+
+a = Checker()
+print(a.age)
+a.age = 33
+print(a.age)
+>>>>>>> b8a3076860c8cf1a7d4b2b236269687764731d4c
