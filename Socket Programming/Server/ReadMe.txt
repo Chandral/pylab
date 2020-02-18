@@ -1,1 +1,0 @@
-- The code for backing up logs uses path of Ubuntu, the code is likely to fail if you're running the server on Windows

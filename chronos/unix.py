@@ -14,4 +14,4 @@ print("~" * 50)
 
 current_time = dt.datetime.now()
 print(current_time)
-print(date_to_unix(current_time))
+print(int(date_to_unix(current_time)))
