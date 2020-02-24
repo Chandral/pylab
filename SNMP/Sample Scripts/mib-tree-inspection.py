@@ -19,7 +19,7 @@ mibBuilder = builder.MibBuilder()
 
 # Optionally set an alternative path to compiled MIBs
 # print('Setting MIB sources...')
-mibBuilder.addMibSources(builder.DirMibSource('/home/chandral/MyGithub/projects/pylab/SNMP/MIB Files'))
+mibBuilder.addMibSources(builder.DirMibSource('/home/chandral/MyGithub/practice/pylab/SNMP/MIB Files'))
 # print(mibBuilder.getMibSources())
 # print('done')
 

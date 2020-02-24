@@ -1,7 +1,7 @@
 from pysnmp.smi import builder, view, compiler, error
 
 mibBuilder = builder.MibBuilder()
-mibBuilder.addMibSources(builder.DirMibSource('/home/chandral/MyGithub/projects/pylab/SNMP/MIB Files'))
+mibBuilder.addMibSources(builder.DirMibSource('/home/chandral/MyGithub/practice/pylab/SNMP/MIB Files'))
 mibBuilder.loadModules('ORION-BASE-MIB')
 mibView = view.MibViewController(mibBuilder)
 
