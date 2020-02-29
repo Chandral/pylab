@@ -8,7 +8,7 @@ def ping(host):
     Remember that a host may not respond to a ping (ICMP) request even if the host name is valid.
     """
 
-    # Option for the number of packets as a function of
+    # Option for the number of packets as a functigit puon of
     param = '-n' if platform.system().lower()=='windows' else '-c'
 
     # Building the command. Ex: "ping -c 1 google.com"
