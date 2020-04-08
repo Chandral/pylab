@@ -1,2 +1,0 @@
-import creator
-print(creator)
